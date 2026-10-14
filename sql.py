@@ -2,8 +2,8 @@ import duckdb
 import numpy
 
 result = duckdb.sql("""
-    SELECT *
-    FROM events.csv;
+SELECT * 
+FROM payments.csv;
 """)
 
 print(result.df())
