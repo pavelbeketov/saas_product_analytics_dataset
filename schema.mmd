@@ -1,0 +1,51 @@
+erDiagram
+    USERS {
+        INT user_id PK
+        DATE signup_date
+        VARCHAR country
+        VARCHAR acquisition_channel
+        VARCHAR device
+    }
+    EVENTS {
+        INT event_id PK
+        INT user_id FK
+        DATE event_date
+        VARCHAR event_name
+        VARCHAR device
+        VARCHAR experiment_id
+        VARCHAR variant
+    }
+    SUBSCRIPTIONS {
+        INT subscription_id PK
+        INT user_id FK
+        VARCHAR plan
+        DATE start_date
+        DATE cancel_date
+        VARCHAR status
+    }
+    PAYMENTS {
+        INT payment_id PK
+        INT user_id FK
+        INT subscription_id FK
+        DATE payment_date
+        DECIMAL amount_usd
+        VARCHAR currency
+        VARCHAR status
+    }
+    EXPERIMENT_ASSIGNMENTS {
+        INT user_id PK, FK
+        VARCHAR experiment_id
+        VARCHAR variant
+        DATE assigned_date
+    }
+    MARKETING_SPEND {
+        DATE spend_date PK
+        VARCHAR acquisition_channel PK
+        DECIMAL spend_usd
+    }
+
+    USERS ||--o{ EVENTS : has
+    USERS ||--o{ SUBSCRIPTIONS : starts
+    USERS ||--o{ PAYMENTS : makes
+    SUBSCRIPTIONS ||--o{ PAYMENTS : billed_by
+    USERS ||--o| EXPERIMENT_ASSIGNMENTS : assigned
